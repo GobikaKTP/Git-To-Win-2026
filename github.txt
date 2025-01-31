@@ -1,0 +1,87 @@
+2. String reverse :
+
+def transform_string(input_string):
+    words = input_string.split() 
+    vowels = "aeiouAEIOU" 
+
+    for i in range(len(words)):
+        if i % 2 != 0:
+            words[i] = words[i][::-1] 
+        
+    
+        if i % 2 == 0:
+            words[i] = ''.join(['*' if char in vowels else char for char in words[i]])
+    return ' '.join(words)
+    
+input_string = input("Enter any String:")
+output_string = transform_string(input_string)
+print(output_string)
+
+
+
+1.Grid method implementation :
+
+import numpy as np
+
+def draw_shape(grid, shape_type, size, x_pos, y_pos):
+    rows, cols = grid.shape
+
+    if not (0 <= x_pos < cols and 0 <= y_pos < rows):
+        print("Shape coordinates are out of bounds.")
+        return
+    if size <= 0:
+        return
+    if shape_type not in ("triangle", "square", "circle"):
+        print("Invalid Shape Type")
+        return
+
+
+    if shape_type == "square":
+        for i in range(size):
+            for j in range(size):
+                x = x_pos + i
+                y = y_pos + j
+                if 0 <= x < cols and 0 <= y < rows: 
+                    grid[y, x] = 1
+
+    elif shape_type == "triangle":
+        for i in range(size):
+            for j in range(i + 1):
+                x = x_pos + j
+                y = y_pos + i
+                if 0 <= x < cols and 0 <= y < rows: 
+                    grid[y, x] = 1
+
+    elif shape_type == "circle": 
+        for i in range(-size, size + 1):
+            for j in range(-size, size + 1):
+                if i**2 + j**2 <= size**2:  
+                    x = x_pos + j
+                    y = y_pos + i
+                    if 0 <= x < cols and 0 <= y < rows:
+                        grid[y, x] = 1
+
+
+
+def print_grid(grid):
+    for row in grid:
+        print(" ".join(map(str, row)))  
+
+
+
+grid = np.zeros((10, 10), dtype=int)  
+
+draw_shape(grid, "square", 3, 2, 1)
+draw_shape(grid, "triangle", 4, 6, 5)
+draw_shape(grid, "circle", 2, 4, 4) 
+
+print_grid(grid)
+
+
+
+grid = np.zeros((10, 10), dtype=int) 
+draw_shape(grid, "square", 3, 12, 1) 
+draw_shape(grid, "square", -2, 2, 1) 
+draw_shape(grid, "pentagon", 3, 2, 1) 
+
+print_grid(grid) 
